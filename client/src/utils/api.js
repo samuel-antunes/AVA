@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const sendMessage = async (message) => {
   try {
-    const response = await axios.post("http://localhost:4000/chat", {
+    const response = await axios.post("http://localhost:4000/api/chat", {
       message,
     });
     return response.data.reply;
@@ -18,7 +18,7 @@ export const transcribeAudio = async (audioBlob) => {
 
   try {
     const response = await axios.post(
-      "http://localhost:4000/transcribe",
+      "http://localhost:4000/api/transcribe",
       formData,
       {
         headers: {
@@ -36,7 +36,7 @@ export const transcribeAudio = async (audioBlob) => {
 export const generateTTS = async (text) => {
   try {
     const response = await axios.post(
-      "http://localhost:4000/tts",
+      "http://localhost:4000/api/tts",
       { text },
       { responseType: "blob" }
     );
