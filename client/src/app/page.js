@@ -1,4 +1,9 @@
 import Chat from "../components/Chat";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import "../utils/fontawesome";
+
+config.autoAddCss = false;
 
 export const metadata = {
   title: "Chat with AVA",

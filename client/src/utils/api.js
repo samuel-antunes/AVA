@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const sendMessage = async (message) => {
+export const sendMessage = async (conversation) => {
   try {
     const response = await axios.post("http://localhost:4000/api/chat", {
-      message,
+      conversation,
     });
     return response.data.reply;
   } catch (error) {

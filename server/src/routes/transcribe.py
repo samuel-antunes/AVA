@@ -11,8 +11,6 @@ def transcribe():
         return jsonify({'error': 'No file provided'}), 400
     
     file = request.files['file']
-
-    print(file)
     
     try:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tmp_file:

@@ -8,7 +8,7 @@ const ChatMessage = ({ sender, text, onPlayTTS }) => (
   >
     <strong className="mr-2">{sender === "user" ? "You" : "Bot"}:</strong>
     <span>{text}</span>
-    {sender === "bot" && (
+    {sender === "assistant" && (
       <button
         onClick={onPlayTTS}
         className="ml-2 text-blue-500 hover:text-blue-700"

@@ -9,9 +9,7 @@ const RecordButton = ({ isRecording, onStart, onStop }) => (
         ? "bg-red-500 hover:bg-red-600"
         : "bg-green-500 hover:bg-green-600"
     }`}
-  >
-    {isRecording ? "Recording..." : "Hold to Record"}
-  </button>
+  ></button>
 );
 
 export default RecordButton;

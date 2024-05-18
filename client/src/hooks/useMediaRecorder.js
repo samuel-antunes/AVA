@@ -7,21 +7,19 @@ export const useMediaRecorder = () => {
 
   useEffect(() => {
     const setupMediaRecorder = async () => {
-      if (typeof window !== "undefined") {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({
-            audio: true,
-          });
-          const recorder = new MediaRecorder(stream);
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+        const recorder = new MediaRecorder(stream);
 
-          recorder.ondataavailable = (event) => {
-            setAudioBlob(event.data);
-          };
+        recorder.ondataavailable = (event) => {
+          setAudioBlob(event.data);
+        };
 
-          setMediaRecorder(recorder);
-        } catch (error) {
-          console.error("Error accessing media devices.", error);
-        }
+        setMediaRecorder(recorder);
+      } catch (error) {
+        console.error("Error accessing media devices.", error);
       }
     };
 

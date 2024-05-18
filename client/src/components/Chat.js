@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMicrophone, faStop } from "@fortawesome/free-solid-svg-icons";
 import { useMediaRecorder } from "../hooks/useMediaRecorder";
 import { sendMessage, transcribeAudio, generateTTS } from "../utils/api";
 import ChatMessage from "./ChatMessage";
-import RecordButton from "./RecordButton";
 
 const Chat = () => {
   const [message, setMessage] = useState("");
@@ -11,13 +12,30 @@ const Chat = () => {
   const { audioBlob, isRecording, startRecording, stopRecording } =
     useMediaRecorder();
 
-  const handleSendMessage = async (messageText) => {
-    const userMessage = { sender: "user", text: messageText };
-    setConversation((prev) => [...prev, userMessage]);
+  useEffect(() => {
+    const handleTranscription = async () => {
+      if (audioBlob) {
+        const transcribedText = await transcribeAudio(audioBlob);
+        if (transcribedText) {
+          handleSendMessage(transcribedText);
+        }
+      }
+    };
 
-    const botReply = await sendMessage(messageText);
+    handleTranscription();
+  }, [audioBlob]);
+
+  const handleSendMessage = async (messageText) => {
+    const userMessage = { role: "user", content: messageText };
+    const updatedConversation = [...conversation, userMessage];
+    setConversation(updatedConversation);
+
+    const botReply = await sendMessage(updatedConversation);
     if (botReply) {
-      setConversation((prev) => [...prev, { sender: "bot", text: botReply }]);
+      setConversation((prev) => [
+        ...prev,
+        { role: "assistant", content: botReply },
+      ]);
     }
   };
 
@@ -36,24 +54,15 @@ const Chat = () => {
     }
   };
 
-  const handleTranscription = async () => {
-    if (audioBlob) {
-      const transcribedText = await transcribeAudio(audioBlob);
-      if (transcribedText) {
-        handleSendMessage(transcribedText);
-      }
-    }
-  };
-
   return (
     <div className="p-5 max-w-lg mx-auto">
       <div className="mb-5 h-96 overflow-y-scroll border border-gray-300 p-4 bg-gray-50 rounded-lg">
         {conversation.map((entry, index) => (
           <ChatMessage
             key={index}
-            sender={entry.sender}
-            text={entry.text}
-            onPlayTTS={() => handlePlayTTS(entry.text)}
+            sender={entry.role}
+            text={entry.content}
+            onPlayTTS={() => handlePlayTTS(entry.content)}
           />
         ))}
       </div>
@@ -71,21 +80,12 @@ const Chat = () => {
         >
           Send
         </button>
-      </div>
-      <div className="mt-5 flex flex-col items-center">
-        <RecordButton
-          isRecording={isRecording}
-          onStart={startRecording}
-          onStop={stopRecording}
-        />
-        {audioBlob && (
-          <button
-            onClick={handleTranscription}
-            className="mt-2 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          >
-            Transcribe and Send
-          </button>
-        )}
+        <button
+          onClick={isRecording ? stopRecording : startRecording}
+          className="ml-2 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          <FontAwesomeIcon icon={isRecording ? faStop : faMicrophone} />
+        </button>
       </div>
     </div>
   );
