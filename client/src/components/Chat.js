@@ -1,48 +1,47 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
+import { useMediaRecorder } from "../hooks/useMediaRecorder";
+import { sendMessage, transcribeAudio, generateTTS } from "../utils/api";
+import ChatMessage from "./ChatMessage";
+import RecordButton from "./RecordButton";
 
 const Chat = () => {
   const [message, setMessage] = useState("");
   const [conversation, setConversation] = useState([]);
+  const { audioBlob, isRecording, startRecording, stopRecording } =
+    useMediaRecorder();
 
-  const handleSendMessage = async () => {
-    if (!message.trim()) return;
+  const handleSendMessage = async (messageText) => {
+    const userMessage = { sender: "user", text: messageText };
+    setConversation((prev) => [...prev, userMessage]);
 
-    const userMessage = { sender: "user", text: message };
-    setConversation([...conversation, userMessage]);
-
-    try {
-      const response = await axios.post("http://localhost:5000/chat", {
-        message,
-      });
-      const botReply = { sender: "bot", text: response.data.reply };
-      setConversation([...conversation, userMessage, botReply]);
-    } catch (error) {
-      console.error("Error sending message:", error);
+    const botReply = await sendMessage(messageText);
+    if (botReply) {
+      setConversation((prev) => [...prev, { sender: "bot", text: botReply }]);
     }
-
-    setMessage("");
   };
 
   const handlePlayTTS = async (text) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/tts",
-        { text },
-        { responseType: "blob" }
-      );
-      const audioUrl = URL.createObjectURL(response.data);
+    const audioUrl = await generateTTS(text);
+    if (audioUrl) {
       const audio = new Audio(audioUrl);
       audio.play();
-    } catch (error) {
-      console.error("Error generating TTS:", error);
     }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      handleSendMessage();
+      handleSendMessage(message);
+      setMessage("");
+    }
+  };
+
+  const handleTranscription = async () => {
+    if (audioBlob) {
+      const transcribedText = await transcribeAudio(audioBlob);
+      if (transcribedText) {
+        handleSendMessage(transcribedText);
+      }
     }
   };
 
@@ -50,25 +49,12 @@ const Chat = () => {
     <div className="p-5 max-w-lg mx-auto">
       <div className="mb-5 h-96 overflow-y-scroll border border-gray-300 p-4 bg-gray-50 rounded-lg">
         {conversation.map((entry, index) => (
-          <div
+          <ChatMessage
             key={index}
-            className={`flex items-center my-2 ${
-              entry.sender === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            <strong className="mr-2">
-              {entry.sender === "user" ? "You" : "Bot"}:
-            </strong>
-            <span>{entry.text}</span>
-            {entry.sender === "bot" && (
-              <button
-                onClick={() => handlePlayTTS(entry.text)}
-                className="ml-2 text-blue-500 hover:text-blue-700"
-              >
-                🔊
-              </button>
-            )}
-          </div>
+            sender={entry.sender}
+            text={entry.text}
+            onPlayTTS={() => handlePlayTTS(entry.text)}
+          />
         ))}
       </div>
       <div className="flex justify-between">
@@ -80,11 +66,26 @@ const Chat = () => {
           className="flex-1 p-2 border border-gray-300 rounded-md"
         />
         <button
-          onClick={handleSendMessage}
+          onClick={() => handleSendMessage(message)}
           className="ml-2 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
           Send
         </button>
+      </div>
+      <div className="mt-5 flex flex-col items-center">
+        <RecordButton
+          isRecording={isRecording}
+          onStart={startRecording}
+          onStop={stopRecording}
+        />
+        {audioBlob && (
+          <button
+            onClick={handleTranscription}
+            className="mt-2 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
+            Transcribe and Send
+          </button>
+        )}
       </div>
     </div>
   );
