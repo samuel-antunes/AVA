@@ -23,7 +23,7 @@ def chat():
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4",  # specify the model here
+            model="gpt-3.5-turbo",  # specify the model here
             messages=[{"role": "user", "content": user_input}]
         )
         reply = response.choices[0].message.content.strip()
