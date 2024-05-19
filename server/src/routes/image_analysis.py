@@ -3,8 +3,6 @@ from utils.openai_client import client
 import tempfile
 import os
 import base64
-import requests
-from werkzeug.utils import secure_filename
 
 image_analysis_bp = Blueprint('image_analysis', __name__)
 
@@ -47,11 +45,10 @@ def analyze_image():
         if response.status_code != 200:
             return jsonify({'error': response_json}), response.status_code
         reply = response_json['choices'][0]['message']['content'].strip()
-        print(reply)
-        os.remove(file_path)
+        
+        os.remove(file_path)  # Clean up the saved file
         
         return jsonify({'description': reply})
-        
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
