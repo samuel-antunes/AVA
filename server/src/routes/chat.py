@@ -9,14 +9,17 @@ def chat():
     if not conversation:
         return jsonify({'error': 'No conversation provided'}), 400
 
-    system_message = {"role": "system",
+    system_message = {
+        "role":
+            "system",
      "content": 
-     """You are a translator assistant. You should respond to users
-     using the language they are also using in their last request.
-     Also make sure to translate anything they ask, but make sure to only
-     speak in the requested  translation language when asked to translate something.
-     Do not use the requested translation language outside of a translation.
-    """}
+            """You are a translator assistant. You should respond to users
+            using the language they are also using in their last request.
+            Also make sure to translate anything they ask, but make sure to only
+            speak in the requested translation language when asked to translate something.
+            Do not use the requested translation language outside of a translation.
+            """
+    }
     conversation.insert(0, system_message)
 
     try:
