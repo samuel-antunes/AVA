@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from utils import client
+from src.utils import client
 import tempfile
 import os
 
