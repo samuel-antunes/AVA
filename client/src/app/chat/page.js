@@ -3,7 +3,7 @@ import Chat from "../../components/Chat";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "../../utils/fontawesome";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import languages from "../../constants/languages";
@@ -71,15 +71,15 @@ const App = () => {
           </ul>
           <button
             className="add-language-button mt-4"
-            onClick={() => setShowSearch(true)}
+            onClick={() => setShowSearch(!showSearch)}
           >
             +
           </button>
         </div>
         <div
           className={`language-search p-4 ${
-            showSearch ? "animate-slide-up" : ""
-          }`}
+            showSearch ? "animate-slide-up" : "animate-slide-down"
+          } ${showSearch === null ? "" : "show-hide-transition"}`}
         >
           <div className="relative mb-2">
             <input

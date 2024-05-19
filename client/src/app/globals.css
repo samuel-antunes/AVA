@@ -71,20 +71,20 @@ body {
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
-.language-search.animate-slide-up {
-  display: block;
-  animation: slide-up 0.8s ease-in-out forwards;
+.language-search.show-hide-transition {
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
 }
 
-@keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.language-search.animate-slide-up {
+  display: block;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.language-search.animate-slide-down {
+  display: block;
+  transform: translateY(100%);
+  opacity: 0;
 }
 
 .chat-area {
@@ -125,7 +125,6 @@ body {
   background-color: #696969;
   border-radius: 0 0 30px 30px;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
-  margin-top: 10px;
 }
 
 .buttons-container {
