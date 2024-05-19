@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone, faStop } from "@fortawesome/free-solid-svg-icons";
 import { useMediaRecorder } from "../hooks/useMediaRecorder";
-import { sendMessage, transcribeAudio, generateTTS } from "../utils/api";
+import { sendMessage, transcribeAudio, generateTTS, translateImage } from "../utils/api";
 import ChatMessage from "./ChatMessage";
 
 const Chat = () => {
   const [message, setMessage] = useState("");
   const [conversation, setConversation] = useState([]);
+  const [image, setImage] = useState()
   const { audioBlob, isRecording, startRecording, stopRecording } =
     useMediaRecorder();
 
@@ -21,7 +22,6 @@ const Chat = () => {
         }
       }
     };
-
     handleTranscription();
   }, [audioBlob]);
 
@@ -30,8 +30,19 @@ const Chat = () => {
     const updatedConversation = [...conversation, userMessage];
     setConversation(updatedConversation);
 
-    const botReply = await sendMessage(updatedConversation);
-    if (botReply) {
+    if(!image) {
+      const botReply = await sendMessage(updatedConversation);
+      if (botReply) {
+        setConversation((prev) => [
+          ...prev,
+          { role: "assistant", content: botReply },
+        ]);
+      }
+      return;
+    }
+
+    const botReply = await translateImage(image, messageText);
+    if(botReply) {
       setConversation((prev) => [
         ...prev,
         { role: "assistant", content: botReply },
@@ -54,6 +65,22 @@ const Chat = () => {
     }
   };
 
+<<<<<<< HEAD
+=======
+  const handleTranscription = async () => {
+    if (audioBlob) {
+      const transcribedText = await transcribeAudio(audioBlob);
+      if (transcribedText) {
+        handleSendMessage(transcribedText);
+      }
+    }
+  };
+
+  const handleImageInput = async (e) => {
+    setImage(URL.createObjectURL(e.target.files[0]));
+  }
+
+>>>>>>> 6bdb2bb (Added function to send images and messages to the server)
   return (
     <div className="p-5 max-w-lg mx-auto">
       <div className="mb-5 h-96 overflow-y-scroll border border-gray-300 p-4 bg-gray-50 rounded-lg">
@@ -86,6 +113,10 @@ const Chat = () => {
         >
           <FontAwesomeIcon icon={isRecording ? faStop : faMicrophone} />
         </button>
+      </div>
+      <div className="mt-5 flex flex-col items-center">
+        <h2 className="">Image Translator</h2>
+        <input type="file" onChange={handleImageInput} accept="image/png, image/jpeg, image/jpg, image/webp" />
       </div>
     </div>
   );

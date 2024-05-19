@@ -46,3 +46,19 @@ export const generateTTS = async (text) => {
     return null;
   }
 };
+
+export const translateImage = async (image, message) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:4000/api/image",{
+        image: image,
+        message: message,
+        responseType: "blob"
+      }
+    );
+    return response.data.reply;
+  } catch (error) {
+    console.error("Error generating Image Translation:", error);
+    return null;
+  }
+}
