@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const GetStarted = () => {
     const router = useRouter();
@@ -11,6 +12,15 @@ const GetStarted = () => {
     };
 
     return (
+      <>
+        <div className="absolute w-screen h-screen">
+          <Image src={"/Arbic.svg"} priority alt="Image" width={220} height={220} className="absolute bottom-1/3 right-1/4 -mr-[80px] z-10"/>
+          <Image src={"/French.svg"} alt="Image" width={220} height={220} className="absolute right-3/4 top-2/3 -mr-[40px] z-10"/>
+          <Image src={"/Korean.svg"} alt="Image" width={220} height={220} className="absolute bottom-3/4 right-1/3 mb-[50px]" />
+          <Image src={"/Persian.svg"} alt="Image" width={180} height={180} className="absolute left-1/4 top-1/3 ml-[150px]"/>
+          <Image src={"/Portuguese.svg"} alt="Image" width={180} height={160} className="absolute top-1/3 left-3/4 transform -translate-y-1/2"/>
+          <Image src={"/Spanish.svg"} alt="Image" width={200} height={200} className="absolute left-1/4 top-1/4 -ml-[100px] -mt-[50px]"/>
+        </div>
         <div className="w-screen h-screen flex justify-center items-end pb-10">
         <div className="relative bg-[#E5E5E5] rounded-3xl shadow-lg" style={{ width: '550px', height: '249px' }}>
           {/* Yellow rectangle */}
@@ -43,6 +53,7 @@ const GetStarted = () => {
           </div>
         </div>
       </div>
+    </>
     );
 };
 
