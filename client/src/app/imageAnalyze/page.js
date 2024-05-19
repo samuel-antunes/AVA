@@ -2,6 +2,7 @@
 
 import Head from "next/head";
 import ImageAnalyze from "@/components/ImageAnalyze";
+import Camera from "@/components/Camera";
 
 export default function imageAnalyze() {
   return (
@@ -14,6 +15,7 @@ export default function imageAnalyze() {
       <main className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
         <h1 className="text-3xl font-bold mb-8">Chat with AVA</h1>
         <ImageAnalyze />
+        <Camera />
       </main>
     </div>
   );
