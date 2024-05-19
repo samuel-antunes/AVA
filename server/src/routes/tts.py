@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, send_file
-from src.utils.openai_client import client
+from utils.openai_client import client
 import tempfile
 import os
 from pydub import AudioSegment
@@ -66,18 +66,16 @@ def tts():
 
     try:
         segments = split_text_by_language(text)
+        # print(segments)
         audio_files = []
 
-        print(segments)
-
         for language, segment_text in segments:
-           
+            # print(f"Processing segment: {segment_text} in language: {language}")
             audio_file_path = create_tts_segment(segment_text, "alloy")
             if audio_file_path:
                 audio_files.append(audio_file_path)
-
-        print(audio_files)
         
+        # print(audio_files)
         combined = AudioSegment.empty()
         for file_path in audio_files:
             with open(file_path, 'rb') as audio_file:
@@ -87,10 +85,11 @@ def tts():
         
         combined_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
         combined.export(combined_file.name, format="mp3")
-        print(combined_file)
+        
+        # print(combined_file)
         return send_file(combined_file.name, as_attachment=True, download_name="output.mp3", mimetype="audio/mpeg")
     except Exception as e:
-        
+        print(f"Error in TTS processing: {e}")
         return jsonify({'error': str(e)}), 500
     finally:
         if combined_file and os.path.exists(combined_file.name):

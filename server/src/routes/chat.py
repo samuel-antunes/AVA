@@ -29,7 +29,7 @@ def analyze_image(image, messages):
         print()
         payload = {
             "model": "gpt-4o",
-            "messages": [messages[0]] + [
+            "messages": messages + [
                 {
                     "role": "user",
                     "content": [
@@ -80,7 +80,7 @@ def analyze_pdf(pdf, messages):
 
         payload = {
             "model": "gpt-4o",
-            "messages": [messages[0]] + [
+            "messages": messages + [
                 {
                     "role": "user",
                     "content": full_content,
@@ -141,7 +141,7 @@ def chat():
             reply = pdf_translation
         else:
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o",
                 messages=messages
             )
             reply = response.choices[0].message.content.strip()
