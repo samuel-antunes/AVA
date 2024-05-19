@@ -20,7 +20,7 @@ const GetStarted = () => {
           alt="Image"
           width={220}
           height={220}
-          className="absolute bottom-2/3 right-1/3 -mb-[100px] -mr-[60px] md:bottom-1/3 md:right-1/4 md:-mr-[80px] md:z-10"
+          className="absolute bottom-2/3 right-1/3 -mb-[100px] -mr-[40px] md:bottom-1/3 md:right-1/4 md:-mr-[80px]"
         />
         <Image
           src={"/French.svg"}

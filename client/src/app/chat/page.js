@@ -45,7 +45,7 @@ const App = () => {
     <div className="app-container min-h-screen flex bg-[#e5e5e5]">
       <div className="sidebar flex flex-col">
         <div className="favorite-languages p-4 ">
-          <h2 className="text-[40px] mb-2">Favorite Languages</h2>
+          <h2 className="sm:text-[40px] mb-2">Favorite Languages</h2>
           <ul className="language-list overflow-y-auto">
             {favoriteLanguages.map((language, index) => (
               <li
