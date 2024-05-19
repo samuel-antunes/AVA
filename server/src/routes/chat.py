@@ -24,7 +24,7 @@ def analyze_image(image, messages):
 
         payload = {
             "model": "gpt-4o",
-            "messages": messages[0:len(messages)-2] + [
+            "messages": messages[:-1] + [
                 {
                     "role": "user",
                     "content": [
@@ -57,26 +57,28 @@ def chat():
     if not messages:
         return jsonify({'error': 'No messages provided'}), 400
 
-    messages = json.loads(messages) 
-    system_message = {"role": "system",
-     "content": 
-     """You are a translator assistant. You should respond to users
-     using the language they are also using in their last request.
-     Also make sure to translate anything they ask, but make sure to only
-     speak in the requested  translation language when asked to translate something.
-     Do not use the requested translation language outside of a translation.
-     If an image is given, please focus on the translation, rather than the description of the image.
-    """}
+    messages = json.loads(messages)
+    system_message = {
+        "role": "system",
+        "content": """You are a translator assistant. You should respond to users
+        using the language they are also using in their last request.
+        Also make sure to translate anything they ask, but make sure to only
+        speak in the requested translation language when asked to translate something.
+        Do not use the requested translation language outside of a translation.
+        If an image is given, please focus on the translation, rather than the description of the image."""
+    }
     messages.insert(0, system_message)
+    
     try:
         if image:
+            last_message = messages[-1]
             image_description, error = analyze_image(image, messages)
             if error:
                 return jsonify({'error': error}), 500
             reply = image_description
         else:
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo",  # specify the model here
+                model="gpt-3.5-turbo",
                 messages=messages
             )
             reply = response.choices[0].message.content.strip()
