@@ -1,15 +1,16 @@
 # AVA
 Project A.V.A., the Aritificial Verbal Assistant.
-# Inspiration
+## Inspiration
 The inspiration for creating AVA (Artificial Verbal Assistant) came when we had difficulty travelling to different countries and communicating with the locals.
 
-# What it does
+## What it does
 AVA translates from text, speech, and images! AVA can also speak back to you, to help you learn new languages!
 
 
 ## Set Up Locally
 These steps will help with setting up your own AVA:
 ### Step 1. Clone, Fetch, or open a CodeSpace on Github
+Start by either one of ways. Clone or Fetch this repo.
 ### Step 2. Download dependencies from node
 On a terminal, change to the AVA directory.
 ```console
