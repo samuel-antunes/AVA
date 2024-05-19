@@ -20,21 +20,21 @@ const GetStarted = () => {
           alt="Image"
           width={220}
           height={220}
-          className="hidden md:block md:absolute md:bottom-1/3 md:right-1/4 md:-mr-[80px] md:z-10"
+          className="absolute bottom-2/3 right-1/3 -mb-[100px] -mr-[60px] md:bottom-1/3 md:right-1/4 md:-mr-[80px] md:z-10"
         />
         <Image
           src={"/French.svg"}
           alt="Image"
           width={220}
           height={220}
-          className="hidden md:block md:absolute md:right-3/4 md:top-2/3 md:-mr-[40px] md:z-10"
+          className="absolute top-1/2 right-1/3 md:right-3/4 md:top-2/3 md:-mr-[40px] md:z-10"
         />
         <Image
           src={"/Korean.svg"}
           alt="Image"
           width={220}
           height={220}
-          className="hidden md:block md:absolute md:bottom-3/4 md:right-1/3 md:mb-[50px]"
+          className="hidden md:block md:absolute md:block md:bottom-3/4 md:right-1/3 md:mb-[50px]"
         />
         <Image
           src={"/Persian.svg"}
@@ -55,7 +55,7 @@ const GetStarted = () => {
           alt="Image"
           width={200}
           height={200}
-          className="hidden md:block md:absolute md:left-1/4 md:top-1/4 md:-ml-[100px] md:-mt-[50px]"
+          className="absolute bottom-3/4 left-1/2 md:left-1/4 md:top-1/4 md:-ml-[100px] md:-mt-[50px]"
         />
       </div>
       <div className="w-screen h-screen flex justify-center items-end pb-10">
