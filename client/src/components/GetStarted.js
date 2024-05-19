@@ -22,7 +22,7 @@ const GetStarted = () => {
           {/* Text content */}
           <div className="absolute inset-0 bottom-12 flex flex-col justify-center items-center">
             <span 
-                className="font-black text-3xl mb-5" 
+                className="font-bold text-3xl mb-5" 
                 style={{ marginBottom: '10px' }}>
                 Introducing Ava
             </span>
