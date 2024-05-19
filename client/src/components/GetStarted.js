@@ -7,7 +7,7 @@ const GetStarted = () => {
     const router = useRouter();
     
     const handleClick = () => {
-        router.push("/another-page");
+        router.push("/chat");
     };
 
     return (
