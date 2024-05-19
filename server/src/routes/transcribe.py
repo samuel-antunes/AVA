@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from src.utils import client
+from src.utils.openai_client import client
 import tempfile
 import os
 
