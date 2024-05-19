@@ -152,7 +152,7 @@ const Chat = ({ favoriteLanguages }) => {
   return (
     <div className="chat-container">
       <div className="chat-box">
-        <h1 className="text-[40px] mb-8">Chat with AVA</h1>
+        <h1 className="sm:text-[40px] mb-8">Chat with AVA</h1>
         {conversation.map((entry, index) => (
           <div key={index}>
             {entry.type === "image" ? (
@@ -222,7 +222,7 @@ const Chat = ({ favoriteLanguages }) => {
             capture="environment"
           />
         </div>
-        <div className="input-container mt-2 md:mt-0">
+        <div className="input-container mt-2 md:mt-0 p-4">
           <input
             type="text"
             value={message}
