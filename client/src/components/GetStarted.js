@@ -20,42 +20,42 @@ const GetStarted = () => {
           alt="Image"
           width={220}
           height={220}
-          className="absolute bottom-1/3 right-1/4 -mr-[80px] z-10"
+          className="hidden md:block md:absolute md:bottom-1/3 md:right-1/4 md:-mr-[80px] md:z-10"
         />
         <Image
           src={"/French.svg"}
           alt="Image"
           width={220}
           height={220}
-          className="absolute right-3/4 top-2/3 -mr-[40px] z-10"
+          className="hidden md:block md:absolute md:right-3/4 md:top-2/3 md:-mr-[40px] md:z-10"
         />
         <Image
           src={"/Korean.svg"}
           alt="Image"
           width={220}
           height={220}
-          className="absolute bottom-3/4 right-1/3 mb-[50px]"
+          className="hidden md:block md:absolute md:bottom-3/4 md:right-1/3 md:mb-[50px]"
         />
         <Image
           src={"/Persian.svg"}
           alt="Image"
           width={180}
           height={180}
-          className="absolute left-1/4 top-1/3 ml-[150px]"
+          className="hidden md:block md:absolute md:left-1/4 md:top-1/3 md:ml-[150px]"
         />
         <Image
           src={"/Portuguese.svg"}
           alt="Image"
           width={180}
           height={160}
-          className="absolute top-1/3 left-3/4 transform -translate-y-1/2"
+          className="hidden md:block md:absolute md:top-1/3 md:left-3/4 md:transform md:-translate-y-1/2"
         />
         <Image
           src={"/Spanish.svg"}
           alt="Image"
           width={200}
           height={200}
-          className="absolute left-1/4 top-1/4 -ml-[100px] -mt-[50px]"
+          className="hidden md:block md:absolute md:left-1/4 md:top-1/4 md:-ml-[100px] md:-mt-[50px]"
         />
       </div>
       <div className="w-screen h-screen flex justify-center items-end pb-10">
