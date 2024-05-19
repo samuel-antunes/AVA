@@ -110,6 +110,7 @@ const Chat = ({ favoriteLanguages }) => {
 
   const handlePlayTTS = async (text) => {
     const audioUrl = await generateTTS(text);
+    console.log(audioUrl);
     if (audioUrl) {
       const audio = new Audio(audioUrl);
       audio.play();

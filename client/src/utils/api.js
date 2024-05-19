@@ -63,6 +63,7 @@ export const generateTTS = async (text) => {
         },
       }
     );
+    console.log(response.data.audioUrl);
     return response.data.audioUrl;
   } catch (error) {
     console.error("Error generating text-to-speech:", error);

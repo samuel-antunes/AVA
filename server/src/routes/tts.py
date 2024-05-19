@@ -68,11 +68,15 @@ def tts():
         segments = split_text_by_language(text)
         audio_files = []
 
+        print(segments)
+
         for language, segment_text in segments:
            
             audio_file_path = create_tts_segment(segment_text, "alloy")
             if audio_file_path:
                 audio_files.append(audio_file_path)
+
+        print(audio_files)
         
         combined = AudioSegment.empty()
         for file_path in audio_files:
@@ -83,7 +87,7 @@ def tts():
         
         combined_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
         combined.export(combined_file.name, format="mp3")
-        
+        print(combined_file)
         return send_file(combined_file.name, as_attachment=True, download_name="output.mp3", mimetype="audio/mpeg")
     except Exception as e:
         
