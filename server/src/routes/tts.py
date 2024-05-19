@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, send_file
-from src.utils.openai_client import client
+from utils.openai_client import client
 import tempfile
 import os
 from pydub import AudioSegment
