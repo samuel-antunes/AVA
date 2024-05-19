@@ -1,2 +1,47 @@
 # AVA
 Project A.V.A., the Aritificial Verbal Assistant.
+# Inspiration
+The inspiration for creating AVA (Artificial Verbal Assistant) came when we had difficulty travelling to different countries and communicating with the locals.
+
+# What it does
+AVA translates from text, speech, and images! AVA can also speak back to you, to help you learn new languages!
+
+
+## Set Up Locally
+These steps will help with setting up your own AVA:
+### Step 1. Clone, Fetch, or open a CodeSpace on Github
+### Step 2. Download dependencies from node
+On a terminal, change to the AVA directory.
+```console
+./AVA
+```
+Once there, we will first go to the client directory, then download the node dependencies
+```console
+./client &&
+npm install
+```
+### Step 3. Download dependencies using pip/pip3
+Now head over to the server director, from AVA
+Then download the python dependencies with pip/pip3
+```console
+./server &&
+pip install -r requirements.txt
+```
+
+### Step 4. Running the Program
+Once finished downloading, we can start running AVA. Begin by running the server component by changing server/src file.
+```console
+./server/src
+```
+Now run the main.py file with python/python3
+```console
+python main.py
+```
+Your server should be running now. Now open up another terminal and change to the client/src file
+```console
+./client/src
+```
+Now run the node env
+```console
+npm run dev
+```
