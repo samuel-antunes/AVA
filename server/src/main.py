@@ -11,7 +11,7 @@ app.register_blueprint(tts_bp, url_prefix='/api')
 app.register_blueprint(transcribe_bp, url_prefix='/api')
 app.register_blueprint(image_analysis_bp, url_prefix='/api')
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 4000))  # Use the PORT environment variable or default to 4000
-    app.run(host='0.0.0.0', port=port)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 4000))
+    app.run(host="0.0.0.0", port=port, debug=False)
     
