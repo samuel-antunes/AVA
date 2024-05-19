@@ -2,20 +2,35 @@ import React from "react";
 
 const ChatMessage = ({ sender, text, onPlayTTS }) => (
   <div
-    className={`flex items-center my-2 ${
+    className={`flex my-2 ${
       sender === "user" ? "justify-end" : "justify-start"
     }`}
   >
-    <strong className="mr-2">{sender === "user" ? "You" : "Bot"}:</strong>
-    <span>{text}</span>
-    {sender === "assistant" && (
-      <button
-        onClick={onPlayTTS}
-        className="ml-2 text-blue-500 hover:text-blue-700"
+    <div
+      className={`flex items-center ${
+        sender === "user" ? "flex-row-reverse" : ""
+      }`}
+    >
+      <div className="profile-picture">
+        {sender === "user" ? (
+          <img src="user.png" alt="User Profile" className="profile-icon" />
+        ) : (
+          <div className="profile-icon bot-icon">a.</div>
+        )}
+      </div>
+      <div
+        className={`message ${
+          sender === "user" ? "user-message" : "bot-message"
+        }`}
       >
-        🔊
-      </button>
-    )}
+        <span>{text}</span>
+        {sender === "assistant" && (
+          <button onClick={onPlayTTS} className="play-tts">
+            🔊
+          </button>
+        )}
+      </div>
+    </div>
   </div>
 );
 

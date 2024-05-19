@@ -24,7 +24,7 @@ def analyze_image(image, messages):
 
         payload = {
             "model": "gpt-4o",
-            "messages": messages[:-1] + [
+            "messages": [messages[0]] + [
                 {
                     "role": "user",
                     "content": [
