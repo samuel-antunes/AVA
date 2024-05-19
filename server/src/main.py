@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from routes import chat_bp, tts_bp, transcribe_bp, image_analysis_bp
+import os
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
