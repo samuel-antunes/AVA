@@ -1,5 +1,8 @@
 # AVA
 Project A.V.A., the Aritificial Verbal Assistant.
+
+Test it out: https://ava-theta.vercel.app/
+
 ## Inspiration
 The inspiration for creating AVA (Artificial Verbal Assistant) came when we had difficulty travelling to different countries and communicating with the locals.
 
@@ -38,7 +41,8 @@ Now run the main.py file with python/python3
 ```console
 python src/main.py
 ```
-Note: The backend is setup to run on the deployment environment so it might not run, the frontend is setup to use the deployed version.
+Note: The backend is setup to run on the deployed environment so it might not run, the frontend is setup to use the deployed version and some changes might be needed to run locally.
+
 Your server should be running now. Now open up another terminal and change to the client/src file
 ```console
 cd client
