@@ -14,33 +14,34 @@ Start by either one of ways. Clone or Fetch this repo.
 ### Step 2. Download dependencies from node
 On a terminal, change to the AVA directory.
 ```console
-./AVA
+cd AVA
 ```
 Once there, we will first go to the client directory, then download the node dependencies
 ```console
-./client &&
+cd client &&
 npm install
 ```
 ### Step 3. Download dependencies using pip/pip3
 Now head over to the server director, from AVA
 Then download the python dependencies with pip/pip3
 ```console
-./server &&
+cd server &&
 pip install -r requirements.txt
 ```
 
 ### Step 4. Running the Program
 Once finished downloading, we can start running AVA. Begin by running the server component by changing server/src file.
 ```console
-./server/src
+cd server
 ```
 Now run the main.py file with python/python3
 ```console
-python main.py
+python src/main.py
 ```
+Note: The backend is setup to run on the deployment environment so it might not run, the frontend is setup to use the deployed version.
 Your server should be running now. Now open up another terminal and change to the client/src file
 ```console
-./client/src
+cd client
 ```
 Now run the node env
 ```console
