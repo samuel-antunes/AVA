@@ -1,9 +1,7 @@
 import axios from "axios";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-const API_URL = process.env.BACKEND_URL || "http://localhost:4000/api";
+const API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000/api";
 console.log(API_URL);
 
 export const sendMessage = async (
