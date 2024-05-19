@@ -1,10 +1,20 @@
 import axios from "axios";
 
-export const sendMessage = async (conversation, image) => {
+export const sendMessage = async (
+  conversation,
+  file,
+  favoriteLanguages,
+  fileType
+) => {
   const formData = new FormData();
   formData.append("messages", JSON.stringify(conversation));
-  if (image) {
-    formData.append("image", image, "image.jpg");
+  formData.append("favoriteLanguages", JSON.stringify(favoriteLanguages));
+  if (file) {
+    if (fileType === "image") {
+      formData.append("image", file, "image.jpg");
+    } else if (fileType === "pdf") {
+      formData.append("pdf", file, "file.pdf");
+    }
   }
 
   try {
@@ -59,4 +69,3 @@ export const generateTTS = async (text) => {
     return null;
   }
 };
-

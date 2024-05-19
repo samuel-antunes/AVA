@@ -6,6 +6,7 @@ import {
   faStop,
   faPlus,
   faCamera,
+  faFilePdf,
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaRecorder } from "../hooks/useMediaRecorder";
 import { sendMessage, transcribeAudio, generateTTS } from "../utils/api";
@@ -19,10 +20,11 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-const Chat = () => {
+const Chat = ({ favoriteLanguages }) => {
   const [message, setMessage] = useState("");
   const [conversation, setConversation] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedPDF, setSelectedPDF] = useState(null);
   const [imgSrc, setImgSrc] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,43 +49,62 @@ const Chat = () => {
     const userMessage = { role: "user", content: messageText };
     let updatedConversation = [...conversation, userMessage];
 
-    let imageToSend = null;
+    let fileToSend = null;
+    let fileType = null;
+
     if (imgSrc) {
       const response = await fetch(imgSrc);
       const blob = await response.blob();
-      imageToSend = new File([blob], "webcam.jpg", { type: "image/jpeg" });
+      fileToSend = new File([blob], "webcam.jpg", { type: "image/jpeg" });
       updatedConversation.push({
         role: "user",
         content: imgSrc,
         type: "image",
       });
+      fileType = "image";
     }
 
     if (selectedImage) {
-      imageToSend = selectedImage;
+      fileToSend = selectedImage;
       updatedConversation.push({
         role: "user",
         content: URL.createObjectURL(selectedImage),
         type: "image",
       });
+      fileType = "image";
+    }
+
+    if (selectedPDF) {
+      fileToSend = selectedPDF;
+      updatedConversation.push({
+        role: "user",
+        content: selectedPDF.name,
+        type: "pdf",
+      });
+      fileType = "pdf";
     }
 
     setConversation(updatedConversation);
+    setMessage("");
+    setSelectedImage(null);
+    setSelectedPDF(null);
+    setImgSrc(null);
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
 
-    const botReply = await sendMessage(updatedConversation, imageToSend);
+    const botReply = await sendMessage(
+      updatedConversation,
+      fileToSend,
+      favoriteLanguages,
+      fileType
+    );
     if (botReply) {
       setConversation((prev) => [
         ...prev,
         { role: "assistant", content: botReply },
       ]);
-    }
-
-    setMessage("");
-    setSelectedImage(null);
-    setImgSrc(null);
-    setImagePreview(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = null;
     }
   };
 
@@ -103,13 +124,15 @@ const Chat = () => {
 
   const handleImageInput = (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith("image/")) {
       setSelectedImage(file);
       setImagePreview(URL.createObjectURL(file));
+    } else if (file && file.type === "application/pdf") {
+      setSelectedPDF(file);
     }
   };
 
-  const handleImageClick = () => {
+  const handleFileClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -129,6 +152,7 @@ const Chat = () => {
   return (
     <div className="chat-container">
       <div className="chat-box">
+        <h1 className="text-[40px] mb-8">Chat with AVA</h1>
         {conversation.map((entry, index) => (
           <div key={index}>
             {entry.type === "image" ? (
@@ -138,6 +162,16 @@ const Chat = () => {
                   alt="Uploaded"
                   className="uploaded-image"
                 />
+              </div>
+            ) : entry.type === "pdf" ? (
+              <div className="pdf-message">
+                <a
+                  href={entry.content}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {entry.content}
+                </a>
               </div>
             ) : (
               <ChatMessage
@@ -154,6 +188,17 @@ const Chat = () => {
           <img src={imagePreview} alt="Preview" className="uploaded-image" />
         </div>
       )}
+      {selectedPDF && (
+        <div className="pdf-preview">
+          <a
+            href={URL.createObjectURL(selectedPDF)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {selectedPDF.name}
+          </a>
+        </div>
+      )}
       <div className="taskbar flex-col md:flex-row">
         <div className="buttons-container flex md:mr-4">
           <button onClick={handleCameraClick} className="icon-button">
@@ -165,14 +210,14 @@ const Chat = () => {
           >
             <FontAwesomeIcon icon={isRecording ? faStop : faMicrophone} />
           </button>
-          <button onClick={handleImageClick} className="icon-button">
+          <button onClick={handleFileClick} className="icon-button">
             <FontAwesomeIcon icon={faPlus} />
           </button>
           <input
             type="file"
             ref={fileInputRef}
             onChange={handleImageInput}
-            accept="image/png, image/jpeg, image/jpg, image/webp"
+            accept="image/png, image/jpeg, image/jpg, image/webp, application/pdf"
             className="hidden"
             capture="environment"
           />
