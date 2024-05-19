@@ -149,8 +149,13 @@ const Chat = () => {
           </div>
         ))}
       </div>
-      <div className="taskbar">
-        <div className="buttons-container">
+      {imagePreview && (
+        <div className="image-preview">
+          <img src={imagePreview} alt="Preview" className="uploaded-image" />
+        </div>
+      )}
+      <div className="taskbar flex-col md:flex-row">
+        <div className="buttons-container flex md:mr-4">
           <button onClick={handleCameraClick} className="icon-button">
             <FontAwesomeIcon icon={faCamera} />
           </button>
@@ -172,7 +177,7 @@ const Chat = () => {
             capture="environment"
           />
         </div>
-        <div className="input-container">
+        <div className="input-container mt-2 md:mt-0">
           <input
             type="text"
             value={message}

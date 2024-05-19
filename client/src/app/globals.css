@@ -42,6 +42,8 @@ body {
   padding: 10px;
   background-color: black;
   border-radius: 0 0 10px 10px;
+  flex-direction: column; /* Default to column for smaller screens */
+  md: flex-row; /* Change to row for medium and larger screens */
 }
 
 .buttons-container {
@@ -52,6 +54,7 @@ body {
   background-color: white;
   border-radius: 10px;
   height: 40px; /* Ensure the height matches the input */
+  flex-wrap: nowrap;
 }
 
 .input-container {
@@ -59,7 +62,8 @@ body {
   align-items: center;
   position: relative;
   flex: 1;
-  margin-left: 10px;
+  margin-top: 10px; /* Add margin for spacing */
+  md: margin-top-0; /* Remove margin for larger screens */
 }
 
 .message-input {
@@ -164,6 +168,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .profile-icon {
@@ -203,26 +209,6 @@ body {
   background-color: #e5e5e5;
   align-items: flex-start;
   justify-content: flex-start;
-}
-
-.user-message .profile-picture {
-  margin-left: 10px; /* Add margin to the left for user profile picture */
-}
-
-.bot-message .profile-picture {
-  margin-right: 10px; /* Keep margin to the right for bot profile picture */
-}
-
-.image-message {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-.uploaded-image {
-  max-width: 200px;
-  border-radius: 10px;
-  margin-left: 10px;
 }
 
 .play-tts {
